@@ -7,4 +7,4 @@ class KnifeException404(Exception):
     def __call__(self, name_obj: str, _property: str):
         self.detail = f'{name_obj.lower().capitalize()} \'{_property.upper()}\' is absent in db!'
 
-weapons_exc404 = KnifeException404()
+knife_exc404 = KnifeException404()
