@@ -1,12 +1,11 @@
 from pydantic import BaseModel, Field, field_validator
-from enum_schema import EnumSellStatus
 
 class ProductSchemaIn(BaseModel):
-    mark: str = Field(min_length=5, max_length=12)
     model: str = Field(min_length=5, max_length=12)
+    mark: str = Field(min_length=5, max_length=12)
     price: float = Field(ge=300)
     is_available: bool = Field(default=True)
-    sell_status: EnumSellStatus | None = Field(default=None, description='the selling status of the product')
+    sell_status: str | None
     img_path: str | None
 
     @field_validator('mark')
