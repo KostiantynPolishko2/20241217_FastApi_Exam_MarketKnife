@@ -2,7 +2,6 @@ from fastapi import APIRouter, status
 from fastapi.responses import RedirectResponse
 from typing import List, Union
 from depends import product_repository, model_params
-from schemas.product_schema import ProductSchemaOut
 from schemas.response_schema import ResponseSchema
 from schemas.product_schema_dto import ProductSchemaDtoPrice
 
@@ -19,8 +18,12 @@ def docs():
 
 
 @router.get('/all')
-def get_products_all(repository: product_repository)->Union[List[ProductSchemaOut], ResponseSchema]:
-    return repository.get_products_all()
+def get_products_all(repository: product_repository)->Union[List[ProductSchemaDtoPrice], ResponseSchema]:
+    response = repository.get_products_all()
+    if isinstance(response, ResponseSchema):
+        return response
+
+    return [ProductSchemaDtoPrice.model_validate(product) for product in response ]
 
 
 @router.get('/{model}')
@@ -30,4 +33,4 @@ def get_product_by_name(model: model_params, repository: product_repository)->Un
     if isinstance(response, ResponseSchema):
         return response
 
-    return ProductSchemaDtoPrice(price=response.price)
+    return ProductSchemaDtoPrice.model_validate(response)

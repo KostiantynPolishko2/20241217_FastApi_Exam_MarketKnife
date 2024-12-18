@@ -7,8 +7,8 @@ class Product(Base):
     id = Column(Integer, primary_key=True, index=True)
     model = Column(String, nullable=False)
     mark = Column(String, nullable=False)
-    price = Column(Float)
     is_available = Column(Boolean, name='availability', default=True)
+    price = Column(Float)
     sell_status = Column(String, nullable=True)
     img_path = Column(String, nullable=True)
 

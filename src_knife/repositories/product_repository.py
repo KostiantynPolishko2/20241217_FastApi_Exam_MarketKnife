@@ -12,24 +12,25 @@ class ProductRepository(AbcProductRepository):
         self.db = db
 
     def get_products_all(self):
-
-        products = self.db.query(Product).all()
-        if not products:
-            return ResponseSchema(code=status.HTTP_404_NOT_FOUND, property='products none')
-
-        return products
+        try:
+            products = self.db.query(Product).all()
+            if not products:
+                return ResponseSchema(code=status.HTTP_404_NOT_FOUND, property='products none')
+            return products
+        except Exception as exc:
+            return ResponseSchema(code=status.HTTP_503_SERVICE_UNAVAILABLE, property=f'get all products failed due to {exc.__cause__}')
 
     def get_product_by_model(self, model: str):
-
-        _model = model.lower()
-        product = self.db.query(Product).filter(Product.model == _model).first()
-        if not product:
-            return ResponseSchema(code=status.HTTP_404_NOT_FOUND, property=f'product {_model} none')
-
-        return product
+        try:
+            _model = model.lower()
+            product = self.db.query(Product).filter(Product.model == _model).first()
+            if not product:
+                return ResponseSchema(code=status.HTTP_404_NOT_FOUND, property=f'product {_model} none')
+            return product
+        except Exception as exc:
+            return ResponseSchema(code=status.HTTP_503_SERVICE_UNAVAILABLE, property=f'get product by name failed due to {exc.__cause__}')
 
     def create_product_new(self, request: ProductSchemaIn):
-
         response: ResponseSchema
         try:
             product = Product(**request.model_dump(exclude_unset=True))
@@ -43,7 +44,6 @@ class ProductRepository(AbcProductRepository):
         return response
 
     def modify_product(self, product: Product, request: ProductSchemaModify):
-
         response: ResponseSchema
         try:
             request_model = request.model_dump(exclude_unset=True)
@@ -59,7 +59,6 @@ class ProductRepository(AbcProductRepository):
         return response
 
     def delete_product(self, product: Product):
-
         response: ResponseSchema
         try:
             self.db.delete(product)
