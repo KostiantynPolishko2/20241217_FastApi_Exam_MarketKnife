@@ -6,3 +6,4 @@ class EnumSellStatus(str, Enum):
     discount = 'discount'
     promotion = 'promotion'
     special_price = 'special_price'
+    other = 'string'
