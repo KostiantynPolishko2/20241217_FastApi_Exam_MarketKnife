@@ -18,10 +18,10 @@ def docs():
 
 
 @router.get('/all')
-def get_all(repository: product_repository)->Union[List[ProductSchemaOut], ResponseSchema]:
-    return repository.get_all()     
+def get_products_all(repository: product_repository)->Union[List[ProductSchemaOut], ResponseSchema]:
+    return repository.get_products_all()
 
 
 @router.get('/{model}')
-def get_by_name(model: model_params, repository: product_repository)->Union[ProductSchemaOut, ResponseSchema]:
-    return repository.get_by_model(model)
+def get_product_by_name(model: model_params, repository: product_repository)->Union[ProductSchemaOut, ResponseSchema]:
+    return repository.get_product_by_model(model)

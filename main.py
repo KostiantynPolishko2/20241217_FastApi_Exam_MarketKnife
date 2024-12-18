@@ -1,6 +1,6 @@
 import uvicorn
 from config_server import ConfigServer
-from src_knife.init import init_routes as init_knife_routes
+from src_knife.__init__ import init_routes as init_knife_routes
 import os
 from dotenv import load_dotenv
 
