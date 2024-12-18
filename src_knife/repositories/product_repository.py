@@ -3,7 +3,8 @@ from sqlalchemy.orm import Session
 from infrastructures.product_exception import *
 from schemas.response_schema import ResponseSchema
 from abstracts.abc_product_repository import AbcProductRepository
-from schemas.product_schema import ProductSchemaIn
+from schemas.product_schema import ProductSchemaIn, ProductSchemaModify
+from fastapi.encoders import jsonable_encoder
 
 class ProductRepository(AbcProductRepository):
 
@@ -11,6 +12,7 @@ class ProductRepository(AbcProductRepository):
         self.db = db
 
     def get_products_all(self):
+
         products = self.db.query(Product).all()
         if not products:
             return ResponseSchema(code=status.HTTP_404_NOT_FOUND, property='products none')
@@ -18,6 +20,7 @@ class ProductRepository(AbcProductRepository):
         return products
 
     def get_product_by_model(self, model: str):
+
         _model = model.lower()
         product = self.db.query(Product).filter(Product.model == _model).first()
         if not product:
@@ -26,6 +29,7 @@ class ProductRepository(AbcProductRepository):
         return product
 
     def create_product_new(self, request: ProductSchemaIn):
+
         response: ResponseSchema
         try:
             product = Product(**request.model_dump(exclude_unset=True))
@@ -38,10 +42,23 @@ class ProductRepository(AbcProductRepository):
 
         return response
 
-    def delete_product_by_model(self, model: str):
-        product = self.get_product_by_model(model)
-        if type(product) is ResponseSchema:
-            return product
+    def modify_product(self, product: Product, request: ProductSchemaModify):
+
+        response: ResponseSchema
+        try:
+            request_model = request.model_dump(exclude_unset=True)
+            for key, value in request_model.items():
+                setattr(product, key, value)
+
+            self.db.commit()
+            self.db.refresh(product)
+            response = ResponseSchema(code=status.HTTP_202_ACCEPTED, property=f'update product id:{product.id} fields:{jsonable_encoder(request)}')
+        except Exception as exc:
+            response = ResponseSchema(code=status.HTTP_503_SERVICE_UNAVAILABLE, property=f'update product failed due to {exc.__cause__}')
+
+        return response
+
+    def delete_product(self, product: Product):
 
         response: ResponseSchema
         try:

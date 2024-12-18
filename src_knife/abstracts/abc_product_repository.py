@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 from models.product import Product
-from schemas.product_schema import ProductSchemaIn, ProductSchemaOut
+from schemas.product_schema import ProductSchemaIn, ProductSchemaModify
 
 class AbcProductRepository(ABC):
 
@@ -17,5 +17,9 @@ class AbcProductRepository(ABC):
         raise NotImplementedError
 
     @abstractmethod
-    def delete_product_by_model(self, model: str):
+    def modify_product(self, product: Product, request: ProductSchemaModify):
+        raise NotImplementedError
+
+    @abstractmethod
+    def delete_product(self, product: Product):
         raise NotImplementedError

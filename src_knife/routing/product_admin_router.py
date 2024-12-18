@@ -1,5 +1,5 @@
-from fastapi import APIRouter, status, Depends
-from schemas.product_schema import ProductSchemaOut, ProductSchemaIn
+from fastapi import FastAPI, APIRouter, status
+from schemas.product_schema import ProductSchemaIn, ProductSchemaModify
 from schemas.response_schema import ResponseSchema
 from depends import product_repository, model_params
 
@@ -13,6 +13,19 @@ router = APIRouter(
 def create_product_new(request: ProductSchemaIn, repository: product_repository)->ResponseSchema:
     return repository.create_product_new(request)
 
+
+@router.patch('/{model}')
+def modify_product_by_model(model: model_params, request: ProductSchemaModify, repository: product_repository)->ResponseSchema:
+    response = repository.get_product_by_model(model)
+    if isinstance(response, ResponseSchema):
+        return response
+
+    return repository.modify_product(response, request)
+
 @router.delete('/{model}')
-def create_product_new(model: model_params, repository: product_repository)->ResponseSchema:
-    return repository.delete_product_by_model(model)
+def delete_product_by_model(model: model_params, repository: product_repository)->ResponseSchema:
+    response = repository.get_product_by_model(model)
+    if isinstance(response, ResponseSchema):
+        return response
+
+    return repository.delete_product(response)
