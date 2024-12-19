@@ -1,6 +1,6 @@
 from pydantic import BaseModel
 from models.user import User
-from schemas.user_schema import UserSchemaInDB
+from app_auth.schemas.user_schema import UserSchemaInDB
 
 class MapHandler(BaseModel):
 

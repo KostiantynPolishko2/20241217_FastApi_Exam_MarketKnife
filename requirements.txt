@@ -6,3 +6,10 @@ python-multipart
 redis~=5.2.1
 pydantic~=2.10.3
 SQLAlchemy~=2.0.36
+python-dotenv~=1.0.1
+PyJWT~=2.10.1
+passlib~=1.7.4
+alembic~=1.14.0
+email-validator
+pydantic[email]
+utils~=1.0.2

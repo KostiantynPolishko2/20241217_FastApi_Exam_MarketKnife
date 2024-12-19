@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
-from models.product import Product
-from schemas.product_schema import ProductSchemaIn, ProductSchemaModify
+from app_knife.models.product import Product
+from app_knife.schemas.product_schema import ProductSchemaIn, ProductSchemaModify
 
 class AbcProductRepository(ABC):
 

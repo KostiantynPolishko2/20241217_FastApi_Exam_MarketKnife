@@ -1,9 +1,11 @@
 from sqlalchemy.orm import Session
-from models.user import User
-from schemas.user_schema import UserSchemaAuth
-from infrastructures.user_exception import user_exc404, new_user_exc400
 from uuid import uuid4
-from utils import get_password_hash
+import utils as muy_utils
+# from utils import get_password_hash
+
+from app_auth.models.user import User
+from app_auth.schemas.user_schema import UserSchemaAuth
+from app_auth.infrastructures.user_exception import user_exc404, new_user_exc400
 
 class AuthRepository:
     def __init__(self, db: Session):
@@ -26,7 +28,7 @@ class AuthRepository:
             email=request.email,
             is_disabled=request.is_disabled,
             guid=uuid4(),
-            hashed_password=get_password_hash(request.password)
+            hashed_password=muy_utils.get_password_hash(request.password)
         )
 
         self.db.add(new_user)

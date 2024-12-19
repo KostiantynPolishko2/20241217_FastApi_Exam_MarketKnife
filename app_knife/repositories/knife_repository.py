@@ -1,7 +1,7 @@
 from sqlalchemy.orm import Session
-from abstracts.abc_product_repository import AbcProductRepository
-from abstracts.abc_knife_repository import AbcKnifeRepository
-from repositories.product_repository import ProductRepository
+from app_knife.abstracts.abc_product_repository import AbcProductRepository
+from app_knife.abstracts.abc_knife_repository import AbcKnifeRepository
+from app_knife.repositories.product_repository import ProductRepository
 
 class KnifeRepository(AbcKnifeRepository):
 

@@ -1,5 +1,5 @@
 from sqlalchemy import (Column, Integer, Float, Boolean, String, UniqueConstraint, CheckConstraint)
-from app_knife.databases.database import Base
+from app_knife.databases.database import Base, engine
 
 class Product(Base):
     __tablename__ = 'products'
@@ -14,5 +14,8 @@ class Product(Base):
 
     __table_args__ = (
         UniqueConstraint('model', name='uq_product_model'),
-        CheckConstraint('price >= 300', name='ck_price_minimum')
+        CheckConstraint('price >= 300', name='ck_price_minimum'),
+        {'extend_existing': True},
     )
+
+Base.metadata.create_all(bind=engine)

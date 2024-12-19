@@ -3,7 +3,7 @@ from fastapi.responses import JSONResponse, Response, PlainTextResponse
 from fastapi.encoders import jsonable_encoder
 from typing import Union
 from fastapi.exceptions import RequestValidationError
-from infrastructures.knife_exception import KnifeException404
+from app_knife.infrastructures.knife_exception import KnifeException404
 
 async def validation_exception_handler(request: Request, exc: RequestValidationError)->Union[JSONResponse, Response]:
     return JSONResponse(

@@ -1,5 +1,5 @@
 from pydantic import BaseModel, Field, field_validator
-from schemas.enum_schema import EnumSellStatus
+from app_knife.schemas.enum_schema import EnumSellStatus
 
 class ProductSchemaIn(BaseModel):
     model: str = Field(min_length=5, max_length=12)

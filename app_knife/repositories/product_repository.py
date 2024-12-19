@@ -1,11 +1,11 @@
-from models.product import Product
 from sqlalchemy.orm import Session
 from fastapi.encoders import jsonable_encoder
 
-from infrastructures.product_exception import *
-from schemas.response_schema import ResponseSchema
-from schemas.product_schema import ProductSchemaIn, ProductSchemaModify
-from abstracts.abc_product_repository import AbcProductRepository
+from app_knife.models.product import Product
+from app_knife.infrastructures.product_exception import *
+from app_knife.schemas.response_schema import ResponseSchema
+from app_knife.schemas.product_schema import ProductSchemaIn, ProductSchemaModify
+from app_knife.abstracts.abc_product_repository import AbcProductRepository
 
 class ProductRepository(AbcProductRepository):
 

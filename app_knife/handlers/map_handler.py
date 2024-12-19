@@ -1,6 +1,6 @@
 from pydantic import BaseModel
-from models.product import Product
-from schemas.product_schema import ProductSchemaOut
+from app_knife.models.product import Product
+from app_knife.schemas.product_schema import ProductSchemaOut
 
 class MapHandler(BaseModel):
 

@@ -1,6 +1,6 @@
 from pydantic import field_validator
-from schemas.product_schema import ProductSchemaIn
-from schemas.enum_schema import EnumSellSum, EnumSellStatus
+from app_knife.schemas.product_schema import ProductSchemaIn
+from app_knife.schemas.enum_schema import EnumSellSum, EnumSellStatus
 
 class ProductSchemaDtoPrice(ProductSchemaIn):
     sell_status: str

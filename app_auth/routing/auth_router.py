@@ -5,17 +5,17 @@ from sqlalchemy.orm import Session
 from typing import Annotated
 # from fastapi.security import OAuth2PasswordRequestForm
 from app_auth.depends import get_current_active_user
-from schemas.user_schema import *
-from schemas.product_schema_response import ProductSchemaResponse
-from schemas.token_schema import TokenSchema
-from schemas.custom_request_form_schema import CustomOAuth2PasswordRequestFormSchema
-from infrastructures.user_exception import new_user_exc406
-from infrastructures.auth_exception import auth_exc401
-from config_auth import *
-from utils import authenticate_user, create_access_token
-from databases.database import get_db
-from models.user import User
-from repositories.auth_repository import AuthRepository
+from app_auth.schemas.user_schema import *
+from app_auth.schemas.product_schema_response import ProductSchemaResponse
+from app_auth.schemas.token_schema import TokenSchema
+from app_auth.schemas.custom_request_form_schema import CustomOAuth2PasswordRequestFormSchema
+from app_auth.infrastructures.user_exception import new_user_exc406
+from app_auth.infrastructures.auth_exception import auth_exc401
+from app_auth.utils import authenticate_user, create_access_token
+from app_auth.config_auth import *
+from app_auth.databases.database import get_db
+from app_auth.models.user import User
+from app_auth.repositories.auth_repository import AuthRepository
 from app_auth.depends import get_auth_repository
 
 router = APIRouter(

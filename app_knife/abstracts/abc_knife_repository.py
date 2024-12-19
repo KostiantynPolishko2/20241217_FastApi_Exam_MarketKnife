@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from abstracts.abc_product_repository import AbcProductRepository
+from app_knife.abstracts.abc_product_repository import AbcProductRepository
 
 class AbcKnifeRepository(ABC):
     @property

@@ -1,9 +1,9 @@
 from passlib.context import CryptContext
 from datetime import datetime, timedelta, timezone
 import jwt
-from config_auth import *
 from sqlalchemy.orm import Session
-from models.user import User
+from app_auth.config_auth import *
+from app_auth.models.user import User
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
