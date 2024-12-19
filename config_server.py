@@ -1,4 +1,5 @@
 from fastapi import FastAPI
+from app_redis.redis_config import lifespan
 
 class ConfigServer:
     title: str

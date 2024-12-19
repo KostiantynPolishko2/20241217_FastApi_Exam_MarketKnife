@@ -8,9 +8,8 @@ from app_knife.schemas.product_schema_dto import ProductSchemaDtoPrice
 router = APIRouter(
     prefix='/product',
     tags=['Http request: Product'],
-    responses={status.HTTP_400_BAD_REQUEST: {'description' : 'Bad Request'}}
+    responses={status.HTTP_400_BAD_REQUEST: {'description' : 'Bad Request'}},
 )
-
 
 @router.get('/', response_class=RedirectResponse, include_in_schema=False)
 def docs():
