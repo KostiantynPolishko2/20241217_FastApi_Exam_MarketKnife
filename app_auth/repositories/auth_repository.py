@@ -1,7 +1,7 @@
 from sqlalchemy.orm import Session
-from models import UserModel
-from schemas import UserAuth
-from infrastructures import none_user_exceptions, create_user_exceptions
+from models.user import User
+from schemas.user_schema import UserSchemaAuth
+from infrastructures.user_exception import user_exc404, new_user_exc400
 from uuid import uuid4
 from utils import get_password_hash
 
@@ -9,19 +9,19 @@ class AuthRepository:
     def __init__(self, db: Session):
         self.db = db
 
-    def get_user(self, username: str)->UserModel:
-        user: UserModel = self.db.query(UserModel).filter(UserModel.username == username.lower()).first()
+    def get_user(self, username: str)->User:
+        user: User = self.db.query(User).filter(User.username == username.lower()).first()
         if not user:
-            raise none_user_exceptions
+            raise user_exc404
         return user
 
     def is_exist_user(self, username: str)->None:
-        user: UserModel = self.db.query(UserModel).filter(UserModel.username == username.lower()).first()
+        user: User = self.db.query(User).filter(User.username == username.lower()).first()
         if user is not None:
-            raise create_user_exceptions
+            raise new_user_exc400
 
-    def add_user_to_db(self, request: UserAuth)->int:
-        new_user = UserModel(
+    def add_user_to_db(self, request: UserSchemaAuth)->int:
+        new_user = User(
             username=request.username,
             email=request.email,
             is_disabled=request.is_disabled,

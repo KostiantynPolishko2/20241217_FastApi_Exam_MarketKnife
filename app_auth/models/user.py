@@ -1,10 +1,9 @@
 import uuid
-
-from sqlalchemy import Column, Integer, String, Boolean, Uuid
-from database import Base, engine
+from sqlalchemy import Column, Integer, String, Boolean
+from databases.database import Base, engine
 from sqlalchemy.dialects.postgresql import UUID
 
-class UserModel(Base):
+class User(Base):
     __tablename__ = 'users'
 
     id = Column(Integer, primary_key=True, index=True)
