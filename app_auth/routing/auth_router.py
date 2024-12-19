@@ -1,6 +1,8 @@
-from django.db.models.functions import Trunc
 from fastapi import APIRouter, Depends, status
 from fastapi.responses import RedirectResponse
+from datetime import timedelta
+from sqlalchemy.orm import Session
+from typing import Annotated
 # from fastapi.security import OAuth2PasswordRequestForm
 from app_auth.depends import get_current_active_user
 from schemas.user_schema import *
@@ -11,12 +13,9 @@ from infrastructures.user_exception import new_user_exc406
 from infrastructures.auth_exception import auth_exc401
 from config_auth import *
 from utils import authenticate_user, create_access_token
-from datetime import timedelta
 from databases.database import get_db
-from sqlalchemy.orm import Session
 from models.user import User
 from repositories.auth_repository import AuthRepository
-from typing import Annotated
 from app_auth.depends import get_auth_repository
 
 router = APIRouter(

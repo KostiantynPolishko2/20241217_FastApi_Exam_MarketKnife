@@ -7,7 +7,7 @@ from infrastructures.credential_exception import credentials_exc401
 from config_auth import *
 import jwt
 from jwt.exceptions import InvalidTokenError
-from utils import get_user
+from app_auth.utils import get_user
 from databases.database import get_db
 from sqlalchemy.orm import Session
 from repositories.auth_repository import AuthRepository

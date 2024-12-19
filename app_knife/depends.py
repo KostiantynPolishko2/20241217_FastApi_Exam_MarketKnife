@@ -1,10 +1,11 @@
+from fastapi import Depends, Path
+from typing import Annotated
+from sqlalchemy.orm import Session
+
 from databases.database import SessionLocal
 from abstracts.abc_knife_repository import AbcKnifeRepository
 from abstracts.abc_product_repository import AbcProductRepository
 from repositories.knife_repository import KnifeRepository
-from fastapi import Depends, Path
-from typing import Annotated
-from sqlalchemy.orm import Session
 
 def get_db():
     try:

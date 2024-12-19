@@ -1,10 +1,10 @@
 from fastapi import APIRouter, status, Depends
+from typing import Annotated
 from schemas.product_schema import ProductSchemaIn, ProductSchemaModify
 from schemas.response_schema import ResponseSchema
 from app_knife.depends import product_repository, model_params
-from app_auth.depends import get_current_active_user
-from app_auth.schemas.user_schema import UserSchema
-from typing import Annotated
+from depends import get_current_active_user
+from schemas.user_schema import UserSchema
 
 router = APIRouter(
     prefix='/product/admin',
