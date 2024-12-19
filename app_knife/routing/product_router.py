@@ -1,7 +1,7 @@
 from fastapi import APIRouter, status
 from fastapi.responses import RedirectResponse
 from typing import List, Union
-from depends import product_repository, model_params
+from app_knife.depends import product_repository, model_params
 from schemas.response_schema import ResponseSchema
 from schemas.product_schema_dto import ProductSchemaDtoPrice
 

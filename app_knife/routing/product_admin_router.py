@@ -1,7 +1,7 @@
 from fastapi import FastAPI, APIRouter, status
 from schemas.product_schema import ProductSchemaIn, ProductSchemaModify
 from schemas.response_schema import ResponseSchema
-from depends import product_repository, model_params
+from app_knife.depends import product_repository, model_params
 
 router = APIRouter(
     prefix='/product/admin',
