@@ -1,5 +1,5 @@
 from sqlalchemy import (Column, Integer, Float, Boolean, String, UniqueConstraint, CheckConstraint)
-from databases.database import Base
+from app_knife.databases.database import Base
 
 class Product(Base):
     __tablename__ = 'products'

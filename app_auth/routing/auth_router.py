@@ -1,3 +1,4 @@
+from django.db.models.functions import Trunc
 from fastapi import APIRouter, Depends, status
 from fastapi.responses import RedirectResponse
 # from fastapi.security import OAuth2PasswordRequestForm
@@ -51,7 +52,7 @@ async def login(form_data: Annotated[CustomOAuth2PasswordRequestFormSchema, Depe
     return TokenSchema(access_token=access_token, token_type="bearer")
 
 
-@router.get("/{username}", deprecated=False)
+@router.get("/{username}", include_in_schema=False)
 async def get_username(username: str, authorization: Annotated[UserSchema, Depends(get_current_active_user)], auth_repository: Annotated[AuthRepository, Depends(get_auth_repository)]):
     if len(username) <= 5:
         raise ValueError('Argument cannot be null')

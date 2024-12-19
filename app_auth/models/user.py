@@ -1,6 +1,6 @@
 import uuid
 from sqlalchemy import Column, Integer, String, Boolean
-from databases.database import Base, engine
+from app_auth.databases.database import Base, engine
 from sqlalchemy.dialects.postgresql import UUID
 
 class User(Base):

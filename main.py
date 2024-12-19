@@ -11,7 +11,7 @@ handle_server = ConfigServer('knife')
 knife_server = handle_server()
 
 init_auth_routes(knife_server)
-# init_knife_routes(knife_server)
+init_knife_routes(knife_server)
 
 host = os.environ['SERVER_HOST']
 port = int(os.environ['SERVER_PORT'])
