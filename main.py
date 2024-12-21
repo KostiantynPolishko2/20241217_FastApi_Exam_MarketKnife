@@ -11,12 +11,13 @@ load_dotenv()
 handle_server = ConfigServer('knife')
 app = handle_server()
 
-# init_auth_routes(app)
+init_auth_routes(app)
 # init_knife_routes(app)
-init_redis_routes(app)
+# init_redis_routes(app)
 
 host = os.environ['SERVER_HOST']
 port = int(os.environ['SERVER_PORT'])
 
 if __name__ == '__main__':
+    # pass
     uvicorn.run(app, host=host, port=port)

@@ -39,7 +39,7 @@ async def create_user(request: UserSchemaAuth, auth_repository: Annotated[AuthRe
 
     return ProductSchemaResponse(code=status.HTTP_201_CREATED, status='created', property=f'username: {request.username}')
 
-@router.post("/token")
+@router.post("/token_service")
 async def login(form_data: Annotated[CustomOAuth2PasswordRequestFormSchema, Depends()], db: Annotated[Session, Depends(get_db)])->TokenSchema:
     user: User = authenticate_user(form_data.username, form_data.password, db)
     if not user:

@@ -13,3 +13,4 @@ alembic~=1.14.0
 email-validator
 pydantic[email]
 utils~=1.0.2
+cantok~=0.0.31

@@ -13,7 +13,7 @@ from app_auth.utils import get_user
 from app_auth.databases.database import get_db
 from app_auth.repositories.auth_repository import AuthRepository
 
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl='/authorization/token')
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl='/authorization/token_service')
 
 async def get_current_user(token: Annotated[str, Depends(oauth2_scheme)], db:Annotated[Session, Depends(get_db)]):
 
