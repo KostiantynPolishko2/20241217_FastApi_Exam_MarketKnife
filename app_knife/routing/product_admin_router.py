@@ -13,34 +13,17 @@ router = APIRouter(
 )
 
 @router.post('/new')
-def create_product_new(request: ProductSchemaIn,
-                        service: product_service,
+def create_product_new(request: ProductSchemaIn, service: product_service,
                        authorization: Annotated[UserSchema, Depends(get_current_active_user)])->ResponseSchema:
-
-    # response: ResponseSchema = repository.create_product_new(request)
-    # if response.code == 201:
-    #     _redis.update_cache()
-
     return service.s_create_product_new(request)
 
 
 @router.patch('/{model}')
-def modify_product_by_model(model: model_params,
-                            request: ProductSchemaModify,
-                            repository: product_repository,
+def modify_product_by_model(model: model_params, request: ProductSchemaModify, service: product_service,
                             authorization: Annotated[UserSchema, Depends(get_current_active_user)])->ResponseSchema:
-    response = repository.get_product_by_model(model)
-    if isinstance(response, ResponseSchema):
-        return response
-
-    return repository.modify_product(response, request)
+    return service.s_modify_product_by_model(model, request)
 
 @router.delete('/{model}')
-def delete_product_by_model(model: model_params,
-                            repository: product_repository,
+def delete_product_by_model(model: model_params, service: product_service,
                             authorization: Annotated[UserSchema, Depends(get_current_active_user)])->ResponseSchema:
-    response = repository.get_product_by_model(model)
-    if isinstance(response, ResponseSchema):
-        return response
-
-    return repository.delete_product(response)
+    return  service.s_delete_product(model)

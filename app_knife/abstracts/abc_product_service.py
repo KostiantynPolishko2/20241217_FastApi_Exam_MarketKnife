@@ -1,6 +1,7 @@
 from abc import ABC, abstractmethod
 from app_knife.abstracts.abc_knife_repository import AbcKnifeRepository
-from app_knife.schemas.product_schema import ProductSchemaIn
+from app_knife.schemas.product_schema import ProductSchemaIn, ProductSchemaModify
+from app_knife.models.product import Product
 
 class AbcProductService(ABC):
 
@@ -12,4 +13,12 @@ class AbcProductService(ABC):
 
     @abstractmethod
     def s_create_product_new(self, request: ProductSchemaIn):
+        raise NotImplementedError
+
+    @abstractmethod
+    def s_modify_product_by_model(self, model: str, request: ProductSchemaModify):
+        raise NotImplementedError
+
+    @abstractmethod
+    def s_delete_product(self, model: str):
         raise NotImplementedError

@@ -30,7 +30,7 @@ class ProductRepository(AbcProductRepository):
         except Exception as exc:
             return ResponseSchema(code=status.HTTP_503_SERVICE_UNAVAILABLE, property=f'get product by name failed due to {exc.__cause__}')
 
-    def create_product_new(self, request: ProductSchemaIn):
+    def create_product_new(self, request: ProductSchemaIn)->ResponseSchema:
         response: ResponseSchema
         try:
             product = Product(**request.model_dump(exclude_unset=True))
@@ -43,7 +43,7 @@ class ProductRepository(AbcProductRepository):
 
         return response
 
-    def modify_product(self, product: Product, request: ProductSchemaModify):
+    def modify_product(self, product: Product, request: ProductSchemaModify)->ResponseSchema:
         response: ResponseSchema
         try:
             request_model = request.model_dump(exclude_unset=True)
@@ -58,7 +58,7 @@ class ProductRepository(AbcProductRepository):
 
         return response
 
-    def delete_product(self, product: Product):
+    def delete_product(self, product: Product)->ResponseSchema:
         response: ResponseSchema
         try:
             self.db.delete(product)
