@@ -10,7 +10,7 @@ load_dotenv()
 handle_server = ConfigServer('knife')
 app = handle_server()
 
-init_auth_routes(app, False)
+init_auth_routes(app)
 init_knife_routes(app)
 
 host = os.environ['SERVER_HOST']

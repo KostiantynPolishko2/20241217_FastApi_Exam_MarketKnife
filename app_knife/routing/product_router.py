@@ -1,16 +1,9 @@
-from fastapi import APIRouter, status
 from fastapi.responses import RedirectResponse
 from typing import List, Union
-from app_knife.depends import product_repository, model_params, redis_repository
+from app_knife.depends import model_params, redis_repository
 from app_knife.schemas.response_schema import ResponseSchema
 from app_knife.schemas.product_schema_dto import ProductSchemaDtoPrice
 from app_knife.routing.config import router
-
-# router = APIRouter(
-#     prefix='/product',
-#     tags=['Http request: Product'],
-#     responses={status.HTTP_400_BAD_REQUEST: {'description' : 'Bad Request'}},
-# )
 
 @router.get('/', response_class=RedirectResponse, include_in_schema=False)
 def docs():

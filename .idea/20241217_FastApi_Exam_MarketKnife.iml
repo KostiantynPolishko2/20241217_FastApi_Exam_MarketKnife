@@ -6,6 +6,7 @@
       <sourceFolder url="file://$MODULE_DIR$/app_knife" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src_knife" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/app_redis" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/redis_cache" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/token_service" isTestSource="false" />
     </content>
     <orderEntry type="jdk" jdkName="Python 3.12" jdkType="Python SDK" />

@@ -5,6 +5,7 @@ from app_knife.schemas.response_schema import ResponseSchema
 from app_knife.depends import product_repository, model_params
 from app_auth.depends import get_current_active_user
 from app_auth.schemas.user_schema import UserSchema
+from app_knife.depends import handle_redis
 
 router = APIRouter(
     prefix='/product/admin',
@@ -15,8 +16,14 @@ router = APIRouter(
 @router.post('/new')
 def create_product_new(request: ProductSchemaIn,
                        repository: product_repository,
+                       _redis: handle_redis,
                        authorization: Annotated[UserSchema, Depends(get_current_active_user)])->ResponseSchema:
-    return repository.create_product_new(request)
+
+    response: ResponseSchema = repository.create_product_new(request)
+    if response.code == 201:
+        _redis.update_cache()
+
+    return response
 
 
 @router.patch('/{model}')

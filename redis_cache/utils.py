@@ -20,8 +20,14 @@ def redis_close(r: Redis)->None:
     r.close()
 
 
-def load_products(r: Redis, db: Session)->None:
+def load_cache(r: Redis, db: Session)->None:
     # pass
     products_sql = db.query(Product).all()
+    if not products_sql:
+        raise ValueError
     products_pyd = [ProductSchemaDtoPrice.model_validate(product_sql).model_dump() for product_sql in products_sql]
     r.set('products', json.dumps(products_pyd))
+
+def update_cache(r: Redis, db: Session) -> None:
+    r.flushdb()
+    load_cache(r, db)
