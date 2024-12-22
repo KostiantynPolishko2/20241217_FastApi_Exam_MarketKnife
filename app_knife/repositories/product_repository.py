@@ -1,5 +1,6 @@
 from sqlalchemy.orm import Session
 from fastapi.encoders import jsonable_encoder
+from typing import Union, List
 from app_knife.models.product import Product
 from app_knife.infrastructures.product_exception import *
 from app_knife.schemas.response_schema import ResponseSchema
@@ -11,7 +12,7 @@ class ProductRepository(AbcProductRepository):
     def __init__(self, db: Session):
         self.db = db
 
-    def get_products_all(self):
+    def get_products_all(self)->Union[List[Product], ResponseSchema]:
         try:
             products = self.db.query(Product).all()
             if not products:
@@ -20,12 +21,11 @@ class ProductRepository(AbcProductRepository):
         except Exception as exc:
             return ResponseSchema(code=status.HTTP_503_SERVICE_UNAVAILABLE, property=f'get all products failed due to {exc.__cause__}')
 
-    def get_product_by_model(self, model: str):
+    def get_product_by_model(self, model: str)->Union[Product, ResponseSchema]:
         try:
-            _model = model.lower()
-            product = self.db.query(Product).filter(Product.model == _model).first()
+            product = self.db.query(Product).filter(Product.model == model).first()
             if not product:
-                return ResponseSchema(code=status.HTTP_404_NOT_FOUND, property=f'product {_model} none')
+                return ResponseSchema(code=status.HTTP_404_NOT_FOUND, property=f'product {model} none')
             return product
         except Exception as exc:
             return ResponseSchema(code=status.HTTP_503_SERVICE_UNAVAILABLE, property=f'get product by name failed due to {exc.__cause__}')

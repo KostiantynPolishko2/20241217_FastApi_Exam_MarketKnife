@@ -11,6 +11,7 @@ from redis_cache.utils import redis_open
 from abc_handle_redis import AbcHandleRedis
 from app_knife.abstracts.abc_product_service import AbcProductService
 from app_knife.services.product_service import ProductService
+from app_knife.schemas.lower_case_path import LowerCasePath
 
 _redis = redis_open()
 
@@ -52,3 +53,9 @@ product_repository = Annotated[AbcProductRepository, Depends(get_product_reposit
 product_service = Annotated[AbcProductService, Depends(get_product_service)]
 
 model_params = Annotated[str, Path(description='knife model', min_length=2, max_length=12)]
+model_params2 = Annotated[LowerCasePath, Path(description="knife model", min_length=2, max_length=12)]
+
+def to_lowercase(model: str = Path(description="knife model", min_length=2, max_length=12)) -> str:
+    return model.lower()
+
+model_params3 = Annotated[str, Depends(to_lowercase)]

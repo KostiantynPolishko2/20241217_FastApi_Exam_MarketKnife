@@ -10,6 +10,13 @@ class AbcProductService(ABC):
     def knife_repository(self)->AbcKnifeRepository:
         raise NotImplementedError
 
+    @abstractmethod
+    def s_get_products_all(self):
+        raise NotImplementedError
+
+    @abstractmethod
+    def s_get_product_by_model(self, model: str):
+        raise NotImplementedError
 
     @abstractmethod
     def s_create_product_new(self, request: ProductSchemaIn):

@@ -11,7 +11,7 @@ class RedisRepository(AbcRedisRepository):
     def __init__(self, _redis: Redis):
         self._redis = _redis
 
-    def get_products_all(self):
+    def get_products_all(self)->Union[List[ProductSchemaDtoPrice], ResponseSchema]:
         try:
             cached_data = self._redis.get('products')
             if not cached_data:
@@ -23,16 +23,15 @@ class RedisRepository(AbcRedisRepository):
         except Exception as exc:
             return ResponseSchema(code=status.HTTP_503_SERVICE_UNAVAILABLE, property=f'get all products failed due to {exc.__cause__}')
 
-    def get_product_by_model(self, model: str):
+    def get_product_by_model(self, model: str)->Union[ProductSchemaDtoPrice, ResponseSchema]:
         try:
             response: Union[List[ProductSchemaDtoPrice], ResponseSchema] = self.get_products_all()
             if isinstance(response, ResponseSchema):
                 return response
 
-            _model = model.lower()
-            product = next((product for product in response if product.model == _model), None)
+            product = next((product for product in response if product.model == model), None)
             if product is None:
-                return ResponseSchema(code=status.HTTP_404_NOT_FOUND, property=f'product {_model} none')
+                return ResponseSchema(code=status.HTTP_404_NOT_FOUND, property=f'product {model} none')
             return product
 
         except Exception as exc:
