@@ -2,7 +2,7 @@ from fastapi import status
 from redis import Redis
 import json
 from typing import List, Union
-from app_knife.abstracts.abc_redis_repository import AbcRedisRepository
+from abstracts.abc_redis_repository import AbcRedisRepository
 from app_knife.schemas.response_schema import ResponseSchema
 from app_knife.schemas.product_schema_dto import ProductSchemaDtoPrice
 

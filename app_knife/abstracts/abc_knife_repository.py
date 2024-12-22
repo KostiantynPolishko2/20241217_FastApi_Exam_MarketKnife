@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 from app_knife.abstracts.abc_product_repository import AbcProductRepository
-from app_knife.abstracts.abc_redis_repository import AbcRedisRepository
-from abc_handle_redis import AbcHandleRedis
+from abstracts.abc_redis_repository import AbcRedisRepository
+from abstracts.abc_handle_redis import AbcHandleRedis
 
 class AbcKnifeRepository(ABC):
 

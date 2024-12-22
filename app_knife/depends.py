@@ -5,10 +5,10 @@ from redis import Redis
 from app_knife.databases.database import SessionLocal
 from app_knife.abstracts.abc_knife_repository import AbcKnifeRepository
 from app_knife.abstracts.abc_product_repository import AbcProductRepository
-from app_knife.abstracts.abc_redis_repository import AbcRedisRepository
+from abstracts.abc_redis_repository import AbcRedisRepository
 from app_knife.repositories.knife_repository import KnifeRepository
 from redis_cache.utils import redis_open
-from abc_handle_redis import AbcHandleRedis
+from abstracts.abc_handle_redis import AbcHandleRedis
 from app_knife.abstracts.abc_product_service import AbcProductService
 from app_knife.services.product_service import ProductService
 from app_knife.schemas.lower_case_path import LowerCasePath

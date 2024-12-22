@@ -1,9 +1,9 @@
 from typing import Union, List
 from app_knife.abstracts.abc_product_repository import AbcProductRepository
-from app_knife.abstracts.abc_redis_repository import AbcRedisRepository
+from abstracts.abc_redis_repository import AbcRedisRepository
 from app_knife.abstracts.abc_knife_repository import AbcKnifeRepository
 from app_knife.abstracts.abc_product_service import AbcProductService
-from abc_handle_redis import AbcHandleRedis
+from abstracts.abc_handle_redis import AbcHandleRedis
 from schemas.product_schema import ProductSchemaIn, ProductSchemaModify
 from app_knife.schemas.product_schema_dto import ProductSchemaDtoPrice
 from app_knife.schemas.response_schema import ResponseSchema

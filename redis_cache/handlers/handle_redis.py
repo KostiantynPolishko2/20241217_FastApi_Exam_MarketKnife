@@ -1,4 +1,4 @@
-from abc_handle_redis import AbcHandleRedis
+from abstracts.abc_handle_redis import AbcHandleRedis
 from redis import Redis
 from sqlalchemy.orm import Session
 import json
