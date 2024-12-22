@@ -4,7 +4,10 @@ from app_knife.routing.product_router import router as product_router
 from app_knife.routing.product_admin_router import router as product_admin_router
 from app_knife.infrastructures.knife_exception import KnifeException404
 
-def init_routes(server: FastAPI)->None:
+def init_routes(server: FastAPI, is_connect = True)->None:
+    if not is_connect:
+        return
+
     server.include_router(product_router)
     server.include_router(product_admin_router)
 

@@ -1,11 +1,13 @@
 from fastapi import Depends, Path
 from typing import Annotated
 from sqlalchemy.orm import Session
-
+from redis import Redis
 from app_knife.databases.database import SessionLocal
 from app_knife.abstracts.abc_knife_repository import AbcKnifeRepository
 from app_knife.abstracts.abc_product_repository import AbcProductRepository
+from app_knife.abstracts.abc_redis_repository import AbcRedisRepository
 from app_knife.repositories.knife_repository import KnifeRepository
+from app_knife.redis.utils import redis_open
 
 def get_db():
     try:
@@ -14,13 +16,28 @@ def get_db():
     finally:
         db.close()
 
+_redis = redis_open()
+
+
+# Dependency to access Redis
+def get_redis()->Redis:
+    if not _redis:
+        raise RuntimeError('redis is not initialized!')
+    yield _redis
+
+
 def get_knife_repository(db: Annotated[Session, Depends(get_db)])->AbcKnifeRepository:
-    return KnifeRepository(db)
+    return KnifeRepository(db, _redis)
+
+def get_redis_repository(db: Annotated[Session, Depends(get_db)], _redis: Annotated[Redis, Depends(get_redis)])->AbcRedisRepository:
+    return KnifeRepository(db, _redis).redis_repository
 
 def get_product_repository(db: Annotated[Session, Depends(get_db)])->AbcProductRepository:
-    return KnifeRepository(db).product_repository
+    return KnifeRepository(db, _redis).product_repository
+
 
 knife_repository = Annotated[AbcKnifeRepository, Depends(get_knife_repository)]
+redis_repository = Annotated[AbcRedisRepository, Depends(get_redis_repository)]
 product_repository = Annotated[AbcProductRepository, Depends(get_product_repository)]
 
 model_params = Annotated[str, Path(description='knife model', min_length=2, max_length=12)]

@@ -1,15 +1,16 @@
 from fastapi import APIRouter, status
 from fastapi.responses import RedirectResponse
 from typing import List, Union
-from app_knife.depends import product_repository, model_params
+from app_knife.depends import product_repository, model_params, redis_repository
 from app_knife.schemas.response_schema import ResponseSchema
 from app_knife.schemas.product_schema_dto import ProductSchemaDtoPrice
+from app_knife.routing.config import router
 
-router = APIRouter(
-    prefix='/product',
-    tags=['Http request: Product'],
-    responses={status.HTTP_400_BAD_REQUEST: {'description' : 'Bad Request'}},
-)
+# router = APIRouter(
+#     prefix='/product',
+#     tags=['Http request: Product'],
+#     responses={status.HTTP_400_BAD_REQUEST: {'description' : 'Bad Request'}},
+# )
 
 @router.get('/', response_class=RedirectResponse, include_in_schema=False)
 def docs():
@@ -17,7 +18,8 @@ def docs():
 
 
 @router.get('/all')
-def get_products_all(repository: product_repository)->Union[List[ProductSchemaDtoPrice], ResponseSchema]:
+def get_products_all(repository: redis_repository)->Union[List[ProductSchemaDtoPrice], ResponseSchema]:
+    # response = repository.get_products_all()
     response = repository.get_products_all()
     if isinstance(response, ResponseSchema):
         return response
@@ -26,7 +28,7 @@ def get_products_all(repository: product_repository)->Union[List[ProductSchemaDt
 
 
 @router.get('/{model}')
-def get_product_by_name(model: model_params, repository: product_repository)->Union[ProductSchemaDtoPrice, ResponseSchema]:
+def get_product_by_name(model: model_params, repository: redis_repository)->Union[ProductSchemaDtoPrice, ResponseSchema]:
 
     response = repository.get_product_by_model(model)
     if isinstance(response, ResponseSchema):

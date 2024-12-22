@@ -1,11 +1,9 @@
-from fastapi import FastAPI, APIRouter, HTTPException, status, Depends
+from fastapi import FastAPI, APIRouter, HTTPException, status
 from contextlib import asynccontextmanager
-from app_redis.utils import redis_open, redis_close, load_products
-from app_knife.databases.database import SessionLocal
-from redis import Redis, ConnectionPool
 from redis_om import Migrator
-
-_redis = redis_open()
+from app_knife.databases.database import SessionLocal
+from app_knife.redis.utils import load_products, redis_close
+from app_knife.depends import _redis
 
 @asynccontextmanager
 async def router_lifespan(app: FastAPI):
@@ -25,10 +23,3 @@ router = APIRouter(
     responses={status.HTTP_400_BAD_REQUEST: {'description' : 'Bad Request'}},
     lifespan=router_lifespan
 )
-
-
-# Dependency to access Redis
-def get_redis()->Redis:
-    if not _redis:
-        raise RuntimeError('redis is not initialized!')
-    yield _redis

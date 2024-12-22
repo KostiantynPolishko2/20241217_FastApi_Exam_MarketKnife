@@ -1,4 +1,3 @@
-from fastapi import FastAPI
 from redis import Redis, ConnectionPool
 from redis_om import Migrator
 from sqlalchemy.orm import Session
