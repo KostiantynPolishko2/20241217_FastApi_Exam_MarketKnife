@@ -12,7 +12,6 @@ def docs():
 
 @router.get('/all')
 def get_products_all(repository: redis_repository)->Union[List[ProductSchemaDtoPrice], ResponseSchema]:
-    # response = repository.get_products_all()
     response = repository.get_products_all()
     if isinstance(response, ResponseSchema):
         return response

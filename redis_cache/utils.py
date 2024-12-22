@@ -27,7 +27,3 @@ def load_cache(r: Redis, db: Session)->None:
         raise ValueError
     products_pyd = [ProductSchemaDtoPrice.model_validate(product_sql).model_dump() for product_sql in products_sql]
     r.set('products', json.dumps(products_pyd))
-
-def update_cache(r: Redis, db: Session) -> None:
-    r.flushdb()
-    load_cache(r, db)

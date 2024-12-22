@@ -9,6 +9,8 @@ from app_knife.abstracts.abc_redis_repository import AbcRedisRepository
 from app_knife.repositories.knife_repository import KnifeRepository
 from redis_cache.utils import redis_open
 from abc_handle_redis import AbcHandleRedis
+from app_knife.abstracts.abc_product_service import AbcProductService
+from app_knife.services.product_service import ProductService
 
 _redis = redis_open()
 
@@ -40,10 +42,13 @@ def get_handle_redis(db: Annotated[Session, Depends(get_db)], _redis: Annotated[
 def get_product_repository(db: Annotated[Session, Depends(get_db)])->AbcProductRepository:
     return KnifeRepository(db, _redis).product_repository
 
+def get_product_service(_knife_repository: Annotated[AbcKnifeRepository, Depends(get_knife_repository)])->AbcProductService:
+    return ProductService(_knife_repository)
 
 knife_repository = Annotated[AbcKnifeRepository, Depends(get_knife_repository)]
 redis_repository = Annotated[AbcRedisRepository, Depends(get_redis_repository)]
 handle_redis = Annotated[AbcHandleRedis, Depends(get_handle_redis)]
 product_repository = Annotated[AbcProductRepository, Depends(get_product_repository)]
+product_service = Annotated[AbcProductService, Depends(get_product_service)]
 
 model_params = Annotated[str, Path(description='knife model', min_length=2, max_length=12)]
