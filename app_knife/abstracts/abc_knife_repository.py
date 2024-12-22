@@ -1,0 +1,21 @@
+from abc import ABC, abstractmethod
+from app_knife.abstracts.abc_product_repository import AbcProductRepository
+from abstracts.abc_redis_repository import AbcRedisRepository
+from abstracts.abc_handle_redis import AbcHandleRedis
+
+class AbcKnifeRepository(ABC):
+
+    @property
+    @abstractmethod
+    def product_repository(self)->AbcProductRepository:
+        raise NotImplementedError
+
+    @property
+    @abstractmethod
+    def redis_repository(self)->AbcRedisRepository:
+        raise NotImplementedError
+
+    @property
+    @abstractmethod
+    def handle_redis(self)->AbcHandleRedis:
+        raise NotImplementedError
